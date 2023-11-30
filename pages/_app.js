@@ -1,22 +1,24 @@
-import { useState } from 'react';
+//import { useState } from 'react';
+import { Provider } from 'react-redux';
+import { useStore } from '@/redux/store';
 import Head from 'next/head';
-import CartContext from '../components/context/cartContext';
+//import CartContext from '../components/context/cartContext';
 import Navbar from '../components/Navbar';
 
 export default function MyApp({ Component, pageProps }) {
-  const [items, setItems] = useState({});
-
+  // const [items, setItems] = useState({});
+  const store = useStore(pageProps.initialReduxState);
   return (
     <>
       <Head>
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
       </Head>
-      <CartContext.Provider value={{ items, setItems }}>
+      <Provider store={store}>
         <Navbar />
         <div className="w-9/12 m-auto pt-10">
           <Component {...pageProps} />
         </div>
-      </CartContext.Provider>
+      </Provider>
     </>
   );
 }
